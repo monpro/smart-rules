@@ -47,9 +47,23 @@ function eveluateLogical(
   data: RuleData,
   customeFunction: { [key: string]: Function },
 ): boolean {
-  throw new Error('Function not implemented.');
+  const conditions = condition.conditions!;
+  switch (condition.logicalOperator) {
+    case 'AND':
+      return conditions.every((cond) =>
+        eveluateCondition(cond, data, customeFunction),
+      );
+    case 'OR':
+      return conditions.some((cond) =>
+        eveluateCondition(cond, data, customeFunction),
+      );
+    case 'NOT':
+      return !eveluateCondition(conditions[0], data, customeFunction);
+    default:
+      throw new Error(`Unknown logical operator: ${condition.operator}`);
+  }
 }
 
 function evaluatePresence(condition: RuleCondition, data: RuleData): boolean {
-  throw new Error('Function not implemented.');
+  return condition.field! in data;
 }
