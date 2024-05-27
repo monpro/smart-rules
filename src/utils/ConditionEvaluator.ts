@@ -51,13 +51,19 @@ function eveluateLogical(
   const conditions = condition.conditions!;
   switch (condition.logicalOperator) {
     case 'AND':
-      return conditions.every((cond) =>
-        eveluateCondition(cond, data, customFunctions),
-      );
+      for (const cond of conditions) {
+        if (!eveluateCondition(cond, data, customFunctions)) {
+          return false;
+        }
+      }
+      return true;
     case 'OR':
-      return conditions.some((cond) =>
-        eveluateCondition(cond, data, customFunctions),
-      );
+      for (const cond of conditions) {
+        if (eveluateCondition(cond, data, customFunctions)) {
+          return true;
+        }
+      }
+      return false;
     case 'NOT':
       return !eveluateCondition(conditions[0], data, customFunctions);
     default:
