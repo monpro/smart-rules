@@ -5,13 +5,13 @@ import { RuleData } from '../models/RuleData';
 export function eveluateCondition(
   condition: RuleCondition,
   data: RuleData,
-  customeFunction: CustomFunction,
+  customFunctions: { [key: string]: CustomFunction }
 ): boolean {
   switch (condition.type) {
     case 'comparison':
       return evaluateComparision(condition, data);
     case 'logical':
-      return eveluateLogical(condition, data, customeFunction);
+      return eveluateLogical(condition, data, customFunctions);
     case 'presence':
       return evaluatePresence(condition, data);
     default:
@@ -46,20 +46,20 @@ function evaluateComparision(
 function eveluateLogical(
   condition: RuleCondition,
   data: RuleData,
-  customeFunction: CustomFunction,
+  customFunctions: { [key: string]: CustomFunction }
 ): boolean {
   const conditions = condition.conditions!;
   switch (condition.logicalOperator) {
     case 'AND':
       return conditions.every((cond) =>
-        eveluateCondition(cond, data, customeFunction),
+        eveluateCondition(cond, data, customFunctions),
       );
     case 'OR':
       return conditions.some((cond) =>
-        eveluateCondition(cond, data, customeFunction),
+        eveluateCondition(cond, data, customFunctions),
       );
     case 'NOT':
-      return !eveluateCondition(conditions[0], data, customeFunction);
+      return !eveluateCondition(conditions[0], data, customFunctions);
     default:
       throw new Error(`Unknown logical operator: ${condition.operator}`);
   }
