@@ -1,8 +1,8 @@
-import { RuleAction } from "./RuleAction";
-import { RuleCondition } from "./RuleCondition";
+import { RuleAction } from './RuleAction';
+import { RuleCondition } from './RuleCondition';
 
 export interface JsonRule {
-    name: string;
-    condition: RuleCondition;
-    action: RuleAction;
-  }
+  name: string;
+  condition: RuleCondition;
+  action: RuleAction;
+}

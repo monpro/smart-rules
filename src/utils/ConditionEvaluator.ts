@@ -5,7 +5,7 @@ import { RuleData } from '../models/RuleData';
 export function eveluateCondition(
   condition: RuleCondition,
   data: RuleData,
-  customFunctions: { [key: string]: CustomFunction }
+  customFunctions: { [key: string]: CustomFunction },
 ): boolean {
   switch (condition.type) {
     case 'comparison':
@@ -46,7 +46,7 @@ function evaluateComparision(
 function eveluateLogical(
   condition: RuleCondition,
   data: RuleData,
-  customFunctions: { [key: string]: CustomFunction }
+  customFunctions: { [key: string]: CustomFunction },
 ): boolean {
   const conditions = condition.conditions!;
   switch (condition.logicalOperator) {
